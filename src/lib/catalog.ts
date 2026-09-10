@@ -140,6 +140,149 @@ export const adminProductsQuery = queryOptions({
   },
 });
 
+export type ProductViewCount = {
+  product_id: string;
+  view_count: number;
+  last_viewed: string;
+};
+
+export type TopViewedProduct = {
+  product_id: string;
+  view_count: number;
+  last_viewed: string;
+  name: string;
+  slug: string;
+  price: number;
+  sale_price: number | null;
+  image_url: string | null;
+};
+
+function getAnonId(): string {
+  const key = "ss-anon-id";
+  try {
+    let id = localStorage.getItem(key);
+    if (!id) {
+      id = crypto.randomUUID();
+      localStorage.setItem(key, id);
+    }
+    return id;
+  } catch {
+    return "anon";
+  }
+}
+
+export async function trackProductView(productId: string) {
+  try {
+    const anon_id = getAnonId();
+    // dedup per session: only count once per 30 min per product per browser session
+    const dedupKey = `ss-view-${productId}`;
+    const last = sessionStorage.getItem(dedupKey);
+    const now = Date.now();
+    if (last && now - Number(last) < 30 * 60 * 1000) return;
+    sessionStorage.setItem(dedupKey, String(now));
+
+    const { data: auth } = await supabase.auth.getUser();
+    const user_id = auth.user?.id ?? null;
+
+    const { error } = await supabase.from("product_views").insert({
+      product_id: productId,
+      anon_id,
+      user_id,
+    });
+    if (error) {
+      // table may not exist yet in dev before migration applied — fail silently
+      console.debug("trackProductView failed", error.message);
+    }
+  } catch (e) {
+    console.debug("trackProductView error", e);
+  }
+}
+
+export const productViewCountsQuery = queryOptions({
+  queryKey: ["admin", "product_view_counts"],
+  queryFn: async (): Promise<ProductViewCount[]> => {
+    const { data, error } = await supabase.from("product_view_counts").select("*");
+    if (error) throw error;
+    return (data ?? []) as ProductViewCount[];
+  },
+});
+
+export type ViewRange = "1-day" | "week" | "month" | "all-time";
+
+export function viewRangeToSince(range: ViewRange): string | null {
+  if (range === "all-time") return null;
+  const days = range === "1-day" ? 1 : range === "week" ? 7 : 30;
+  const d = new Date();
+  d.setHours(0, 0, 0, 0);
+  d.setDate(d.getDate() - (days - 1));
+  return d.toISOString();
+}
+
+export const topViewedProductsQuery = (limit = 10, range: ViewRange = "all-time") =>
+  queryOptions({
+    queryKey: ["admin", "top_viewed", limit, range],
+    queryFn: async (): Promise<TopViewedProduct[]> => {
+      const since = viewRangeToSince(range);
+      // Try period-aware RPC; fallback to legacy 1-arg RPC or client aggregation if migration not yet applied
+      if (since !== null) {
+        const { data, error } = await supabase.rpc("get_top_viewed_products", {
+          limit_count: limit,
+          since,
+        } as unknown as { limit_count: number; since: string });
+        if (!error) return (data ?? []) as TopViewedProduct[];
+        // fallback for DB without period support (42883)
+        console.debug("get_top_viewed_products(since) failed, falling back", error.message);
+      }
+      const { data: legacyData, error: legacyError } = await supabase.rpc("get_top_viewed_products", {
+        limit_count: limit,
+      } as unknown as { limit_count: number });
+      if (!legacyError) {
+        // client-side period filter if needed for legacy DB
+        if (since === null || !legacyData) return (legacyData ?? []) as TopViewedProduct[];
+        const sinceMs = new Date(since).getTime();
+        return ((legacyData as TopViewedProduct[]) ?? []).filter((r) => new Date(r.last_viewed).getTime() >= sinceMs);
+      }
+      // final fallback: aggregate directly from product_views (admin can read)
+      const { data: views, error: viewsError } = await supabase
+        .from("product_views")
+        .select("product_id, viewed_at");
+      if (viewsError) throw legacyError ?? viewsError;
+      const filtered = since ? (views as { product_id: string; viewed_at: string }[]).filter((v) => new Date(v.viewed_at).getTime() >= new Date(since).getTime()) : (views as { product_id: string; viewed_at: string }[]);
+      const counts = new Map<string, { count: number; last: string }>();
+      for (const v of filtered) {
+        const c = counts.get(v.product_id);
+        if (!c) counts.set(v.product_id, { count: 1, last: v.viewed_at });
+        else {
+          c.count += 1;
+          if (new Date(v.viewed_at) > new Date(c.last)) c.last = v.viewed_at;
+        }
+      }
+      const sorted = Array.from(counts.entries())
+        .sort((a, b) => b[1].count - a[1].count || new Date(b[1].last).getTime() - new Date(a[1].last).getTime())
+        .slice(0, limit);
+      if (sorted.length === 0) return [];
+      const { data: prods } = await supabase
+        .from("products")
+        .select("id,name,slug,price,sale_price, product_images(image_url,sort_order)")
+        .in("id", sorted.map(([id]) => id));
+      const prodMap = new Map((prods as unknown as { id: string; name: string; slug: string; price: number; sale_price: number | null; product_images: { image_url: string; sort_order: number }[] }[] ?? []).map((p) => [p.id, p]));
+      return sorted.map(([pid, { count, last }]) => {
+        const p = prodMap.get(pid);
+        const img = p?.product_images?.sort((a, b) => a.sort_order - b.sort_order)[0]?.image_url ?? null;
+        return {
+          product_id: pid,
+          view_count: count,
+          last_viewed: last,
+          name: p?.name ?? "Unknown",
+          slug: p?.slug ?? "",
+          price: p?.price ?? 0,
+          sale_price: p?.sale_price ?? null,
+          image_url: img,
+        };
+      });
+    },
+  });
+
 export type Order = {
   id: string;
   customer_name: string;

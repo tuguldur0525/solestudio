@@ -28,7 +28,7 @@ function Store() {
     <>
       <section className="relative">
         <img
-          src={brandImages.storeInterior}
+          src={brandImages.campaignRedHeels}
           alt="Interior of the Sole Studio boutique — concrete floors, wood shelving, burgundy wall"
           className="h-[60vh] w-full object-cover"
         />

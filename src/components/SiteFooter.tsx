@@ -116,7 +116,7 @@ export function SiteFooter() {
             </form>
             <div className="mt-6 flex gap-4 font-mono text-xs">
               <a
-                href="https://instagram.com/solestudio_mn"
+                href="https://instagram.com/solestudio.mn"
                 target="_blank"
                 rel="noreferrer"
                 className="border border-ink-foreground/20 px-3 py-1.5 hover:border-primary hover:text-primary"

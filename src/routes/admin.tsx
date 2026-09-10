@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { ChevronDown, Trash2 } from "lucide-react";
+import { ChevronDown, Eye, Trash2 } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -11,6 +11,8 @@ import {
   ordersQuery,
   primaryImage,
   sortedImages,
+  topViewedProductsQuery,
+  type ViewRange,
   type Product,
 } from "@/lib/catalog";
 import { formatMnt } from "@/lib/brand";
@@ -56,6 +58,13 @@ type OrderRange = (typeof ORDER_RANGES)[number]["value"];
 
 const SIZES = ["39", "40", "41", "42", "43", "44", "45"];
 
+const VIEW_RANGES: { value: ViewRange; label: string }[] = [
+  { value: "1-day", label: "Day" },
+  { value: "week", label: "Week" },
+  { value: "month", label: "Month" },
+  { value: "all-time", label: "All time" },
+];
+
 const revenueChartConfig = {
   revenue: {
     label: "Revenue",
@@ -82,6 +91,7 @@ function Admin() {
   const navigate = useNavigate();
   const qc = useQueryClient();
   const [orderRange, setOrderRange] = useState<OrderRange>("week");
+  const [viewRange, setViewRange] = useState<ViewRange>("week");
 
   useEffect(() => {
     if (!loading && !user) navigate({ to: "/auth" });
@@ -90,6 +100,7 @@ function Admin() {
   const products = useQuery({ ...adminProductsQuery, enabled: isAdmin });
   const orders = useQuery({ ...ordersQuery, enabled: isAdmin });
   const categories = useQuery({ ...categoriesQuery, enabled: isAdmin });
+  const topViewed = useQuery({ ...topViewedProductsQuery(10, viewRange), enabled: isAdmin });
 
   const refreshProducts = () => {
     qc.invalidateQueries({ queryKey: ["admin", "products"] });
@@ -169,15 +180,18 @@ function Admin() {
     p.product_variants.filter((v) => v.stock_quantity <= 2).map((v) => ({ p, v })),
   );
 
+  const totalViews = (topViewed.data ?? []).reduce((s, r) => s + Number(r.view_count), 0);
+
   return (
     <div className="mx-auto max-w-[1400px] px-5 py-16 md:px-10">
       <span className="eyebrow text-primary">Dashboard</span>
       <h1 className="mt-3 font-display text-5xl">Sole Studio admin</h1>
 
-      <div className="mt-10 grid gap-4 sm:grid-cols-4">
+      <div className="mt-10 grid gap-4 sm:grid-cols-5">
         <Stat label="Products" value={String(products.data?.length ?? 0)} />
         <Stat label="Orders" value={String(visibleOrders.length)} />
         <Stat label="Revenue" value={formatMnt(revenue)} />
+        <Stat label="Views" value={String(totalViews)} sub="total" />
         <Stat label="Low stock" value={String(lowStock.length)} />
       </div>
 
@@ -211,10 +225,97 @@ function Admin() {
         </section>
       )}
 
+      {/* Analytics — Most viewed products */}
+      <section className="mt-10 border p-6">
+        <div className="mb-5 flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <p className="eyebrow flex items-center gap-2 text-muted-foreground">
+              <Eye className="h-3.5 w-3.5" /> Analytics
+            </p>
+            <h2 className="mt-1 font-display text-2xl">Most viewed products</h2>
+            <p className="mt-1 text-xs text-muted-foreground">Ranked by views in period (30 min dedup per session)</p>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="hidden font-mono text-xs text-muted-foreground sm:block">{(topViewed.data?.length ?? 0)} tracked</span>
+            <Select value={viewRange} onValueChange={(v) => setViewRange(v as ViewRange)}>
+              <SelectTrigger className="w-32">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {VIEW_RANGES.map((r) => (
+                  <SelectItem key={r.value} value={r.value}>
+                    {r.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+
+        {topViewed.isLoading && <p className="py-8 text-sm text-muted-foreground">Loading views…</p>}
+
+        {topViewed.isError && (
+          <p className="py-4 text-sm text-muted-foreground">
+            Views table not yet migrated or no data. Run supabase migration <code>20260910160000_product_views.sql</code> then refresh.
+          </p>
+        )}
+
+        {!topViewed.isLoading && !topViewed.isError && (topViewed.data?.length ?? 0) === 0 && (
+          <p className="py-8 text-sm text-muted-foreground">No product views yet — visit a product page to start tracking.</p>
+        )}
+
+        {(topViewed.data?.length ?? 0) > 0 && (
+          <>
+            <div className="mb-6 h-64 w-full">
+              <ChartContainer config={{ views: { label: "Views", color: "var(--color-primary)" } }} className="h-64 w-full">
+                <BarChart data={topViewed.data ?? []} layout="vertical" margin={{ left: 24, right: 16 }}>
+                  <CartesianGrid horizontal={false} />
+                  <XAxis type="number" tickLine={false} axisLine={false} />
+                  <YAxis
+                    type="category"
+                    dataKey="name"
+                    tickLine={false}
+                    axisLine={false}
+                    width={140}
+                    tick={{ fontSize: 11 }}
+                    tickFormatter={(v: string) => (v.length > 18 ? v.slice(0, 18) + "…" : v)}
+                  />
+                  <ChartTooltip content={<ChartTooltipContent />} />
+                  <Bar dataKey="view_count" fill="var(--color-views)" radius={2} name="Views" />
+                </BarChart>
+              </ChartContainer>
+            </div>
+
+            <div className="divide-y border-t">
+              {(topViewed.data ?? []).map((row, idx) => (
+                <div key={row.product_id} className="flex items-center gap-4 py-3">
+                  <span className="font-mono text-xs text-muted-foreground">#{idx + 1}</span>
+                  {row.image_url && <img src={row.image_url} alt="" className="h-12 w-10 object-cover" />}
+                  <div className="flex-1">
+                    <p className="text-sm font-medium">{row.name}</p>
+                    <p className="font-mono text-xs text-muted-foreground">
+                      {row.slug} · {formatMnt(row.price)}
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <p className="font-display text-xl">{row.view_count}</p>
+                    <p className="font-mono text-[11px] text-muted-foreground">views</p>
+                  </div>
+                  <div className="hidden text-right text-xs text-muted-foreground md:block">
+                    {new Date(row.last_viewed).toLocaleDateString()}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+      </section>
+
       <Tabs defaultValue="orders" className="mt-12">
         <TabsList>
           <TabsTrigger value="orders">Orders</TabsTrigger>
           <TabsTrigger value="products">Products</TabsTrigger>
+          <TabsTrigger value="analytics">Analytics</TabsTrigger>
           <TabsTrigger value="new">Add product</TabsTrigger>
         </TabsList>
 
@@ -308,6 +409,46 @@ function Admin() {
           {!products.isLoading && (products.data?.length ?? 0) === 0 && (
             <p className="text-sm text-muted-foreground">No products yet.</p>
           )}
+        </TabsContent>
+
+        <TabsContent value="analytics" className="mt-8">
+          <div className="border p-6">
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <p className="eyebrow text-muted-foreground">Product views</p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Total views in period: <span className="font-mono font-bold text-foreground">{totalViews}</span> ·{" "}
+                  <span className="font-mono text-xs">{VIEW_RANGES.find((r) => r.value === viewRange)?.label}</span>
+                </p>
+              </div>
+              <Select value={viewRange} onValueChange={(v) => setViewRange(v as ViewRange)}>
+                <SelectTrigger className="w-32">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {VIEW_RANGES.map((r) => (
+                    <SelectItem key={r.value} value={r.value}>
+                      {r.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="mt-4 divide-y border-t">
+              {(topViewed.data ?? []).map((row, idx) => (
+                <div key={row.product_id} className="flex items-center gap-3 py-3">
+                  <span className="font-mono text-xs">#{idx + 1}</span>
+                  <span className="flex-1 text-sm">{row.name}</span>
+                  <span className="font-mono text-sm">{row.view_count} views</span>
+                </div>
+              ))}
+              {(topViewed.data?.length ?? 0) === 0 && (
+                <p className="py-6 text-sm text-muted-foreground">
+                  No views in {VIEW_RANGES.find((r) => r.value === viewRange)?.label.toLowerCase()}.
+                </p>
+              )}
+            </div>
+          </div>
         </TabsContent>
 
         <TabsContent value="new" className="mt-8">
@@ -806,11 +947,12 @@ function Toggle({ label, on, onClick }: { label: string; on: boolean; onClick: (
   );
 }
 
-function Stat({ label, value }: { label: string; value: string }) {
+function Stat({ label, value, sub }: { label: string; value: string; sub?: string }) {
   return (
     <div className="border p-6">
       <p className="eyebrow text-muted-foreground">{label}</p>
       <p className="mt-2 font-display text-4xl">{value}</p>
+      {sub && <p className="font-mono text-[11px] text-muted-foreground">{sub}</p>}
     </div>
   );
 }

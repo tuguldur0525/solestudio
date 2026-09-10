@@ -65,7 +65,7 @@ function Home() {
             </p>
 
             <h1 className="mt-5 font-display text-[3.5rem] leading-[0.86] tracking-[-0.03em] md:text-[5.6rem]">
-              <span className="block font-light tracking-[0.015em] text-ink-foreground/62">
+              <span className="block font-light tracking-[0.015em] text-ink-foreground/62 py-2">
                 BUILT FOR
               </span>
               <span className="block drop-shadow-[0_1px_12px_rgba(0,0,0,0.35)]">THE STRIDE.</span>
@@ -122,7 +122,7 @@ function Home() {
           </div>
 
           <div>
-            <div className="grid grid-cols-3 gap-4 lg:gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 lg:gap-6">
               {featured.isLoading &&
                 Array.from({ length: 4 }).map((_, i) => (
                   <div key={i} className="border p-2">

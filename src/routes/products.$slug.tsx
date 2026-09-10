@@ -10,6 +10,7 @@ import {
   productQuery,
   productsQuery,
   stockForColor,
+  trackProductView,
 } from "@/lib/catalog";
 import { formatMnt } from "@/lib/brand";
 import { useCart } from "@/lib/cart";
@@ -69,6 +70,11 @@ function ProductDetail() {
   useEffect(() => {
     setActive(0);
   }, [color]);
+
+  // Track product view for analytics (once per session, 30 min dedup)
+  useEffect(() => {
+    if (product?.id) trackProductView(product.id);
+  }, [product?.id]);
 
   const sizesForColor = useMemo(() => {
     if (!product || !color) return [];
