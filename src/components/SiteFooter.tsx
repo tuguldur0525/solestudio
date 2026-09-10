@@ -13,15 +13,15 @@ export function SiteFooter() {
           <span>CEMENT — WOOD — OXBLOOD</span>
           <span className="hidden sm:inline">·</span>
           <span>FULL-GRAIN LEATHER</span>
-          <span className="hidden sm:inline">·</span>
-          <span>39 — 45 · UB</span>
           <span className="ml-auto">EST 2024 — ULAANBAATAR</span>
         </div>
 
         <div className="grid gap-10 py-12 md:grid-cols-[1.4fr_0.8fr_0.8fr_1.2fr] md:py-16">
           <div className="border-l-2 border-primary pl-6">
             <p className="font-display text-[2rem] tracking-[0.18em]">SOLE STUDIO</p>
-            <p className="font-mono text-[10px] tracking-[0.28em] text-ink-foreground/50">CRAFTED FOR MEN</p>
+            <p className="font-mono text-[10px] tracking-[0.28em] text-ink-foreground/50">
+              CRAFTED FOR MEN
+            </p>
             <p className="mt-6 max-w-xs font-mono text-xs leading-relaxed text-ink-foreground/60">
               Premium men's footwear. Cemented, wood-pegged, resoleable. Built on the studio floor.
             </p>
@@ -29,7 +29,9 @@ export function SiteFooter() {
           </div>
 
           <div>
-            <p className="font-mono text-[11px] tracking-[0.18em] text-ink-foreground/40">SHOP — 01</p>
+            <p className="font-mono text-[11px] tracking-[0.18em] text-ink-foreground/40">
+              SHOP — 01
+            </p>
             <ul className="mt-4 space-y-2 font-mono text-xs">
               <li>
                 <Link to="/shop" className="hover:text-primary">
@@ -55,7 +57,9 @@ export function SiteFooter() {
           </div>
 
           <div>
-            <p className="font-mono text-[11px] tracking-[0.18em] text-ink-foreground/40">HOUSE — 02</p>
+            <p className="font-mono text-[11px] tracking-[0.18em] text-ink-foreground/40">
+              HOUSE — 02
+            </p>
             <ul className="mt-4 space-y-2 font-mono text-xs">
               <li>
                 <Link to="/about" className="hover:text-primary">
@@ -81,7 +85,9 @@ export function SiteFooter() {
           </div>
 
           <div>
-            <p className="font-mono text-[11px] tracking-[0.18em] text-ink-foreground/40">STAY ON THE LIST — 03</p>
+            <p className="font-mono text-[11px] tracking-[0.18em] text-ink-foreground/40">
+              STAY ON THE LIST — 03
+            </p>
             <form
               className="mt-4 flex border border-ink-foreground/20"
               onSubmit={(e) => {
@@ -125,7 +131,7 @@ export function SiteFooter() {
               >
                 FB
               </a>
-              <span className="ml-auto text-ink-foreground/40">UB · TARA CENTER 2F</span>
+              <span className="ml-auto text-ink-foreground/40">ULAANBAATAR, GEM PALACE 302</span>
             </div>
           </div>
         </div>

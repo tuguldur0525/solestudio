@@ -3,6 +3,7 @@ import campaignMirror from "@/assets/campaign-mirror.jpg";
 import campaignWhite from "@/assets/campaign-white.jpg";
 import storeInterior from "@/assets/store-interior.jpeg";
 import flowerBurgundy from "@/assets/flower-burgundy.jpg";
+import campaignBlack from "@/assets/campaign-black.jpg";
 import flowerLogo from "@/assets/flower-logo.jpg";
 
 export const brandImages = {
@@ -11,6 +12,7 @@ export const brandImages = {
   campaignWhite: campaignWhite,
   storeInterior: storeInterior,
   flowerBurgundy: flowerBurgundy,
+  campaignBlack: campaignBlack,
   flowerLogo: flowerLogo,
 };
 

@@ -34,22 +34,24 @@ function Home() {
     <>
       {/* HERO — SPLIT, not full-bleed like Vinci. Cement left, image right with frame. */}
       <section className="border-b bg-background">
-        <div className="mx-auto grid max-w-[1600px] grid-cols-1 md:grid-cols-[1.15fr_0.85fr]">
+        <div className="mx-auto grid max-w-[1600px] grid-cols-1 md:grid-cols-[1.2fr_0.8fr]">
           <div className="relative flex flex-col justify-center px-5 py-12 md:px-10 md:py-20 lg:py-24">
             <div className="absolute left-0 top-0 hidden h-full w-px bg-border md:block" />
             <p className="font-mono text-[11px] tracking-[0.24em] text-muted-foreground">
-              01 — AUTUMN / WINTER 2025 · MENS
+              01 — AUTUMN / WINTER 2026 MENS COLLECTION
             </p>
 
             <h1 className="mt-6 font-display text-[3.4rem] leading-[0.85] md:text-[5.2rem] lg:text-[6rem]">
-              <span className="block font-light tracking-[0.02em] text-muted-foreground">BUILT FOR</span>
+              <span className="block font-light tracking-[0.02em] text-muted-foreground">
+                BUILT FOR
+              </span>
               <span className="block tracking-[0.02em]">THE STRIDE</span>
               <span className="mt-3 block h-1 w-24 bg-primary" />
             </h1>
 
-            <p className="mt-8 max-w-[42ch] border-l-2 border-cement pl-5 text-sm leading-relaxed text-muted-foreground">
-              Full-grain leather, cement construction, wood-pegged shank. No seasonal gimmicks — pairs that patina,
-              resole, and stay on foot for years.
+            <p className="mt-8 max-w-[52ch] border-l-2 border-cement pl-5 text-sm leading-relaxed text-muted-foreground">
+              Full-grain leather, cement construction, wood-pegged shank. No seasonal gimmicks —
+              pairs that patina, resole, and stay on foot for years.
             </p>
 
             <div className="mt-10 flex flex-wrap gap-3">
@@ -69,23 +71,29 @@ function Home() {
 
             <div className="mt-12 flex gap-8 border-t pt-6">
               <div>
-                <p className="font-mono text-[11px] tracking-[0.16em] text-muted-foreground">MATERIAL</p>
-                <p className="mt-1 font-mono text-xs font-semibold">FULL-GRAIN • PATINA</p>
+                <p className="font-mono text-[11px] tracking-[0.16em] text-muted-foreground">
+                  MATERIAL
+                </p>
+                <p className="mt-1 font-mono text-xs font-semibold">FULL-GRAIN LEATHER • SUEDE</p>
               </div>
               <div>
-                <p className="font-mono text-[11px] tracking-[0.16em] text-muted-foreground">BUILD</p>
+                <p className="font-mono text-[11px] tracking-[0.16em] text-muted-foreground">
+                  BUILD
+                </p>
                 <p className="mt-1 font-mono text-xs font-semibold">CEMENT • WOOD PEG</p>
               </div>
               <div className="hidden sm:block">
-                <p className="font-mono text-[11px] tracking-[0.16em] text-muted-foreground">SIZES</p>
+                <p className="font-mono text-[11px] tracking-[0.16em] text-muted-foreground">
+                  SIZES
+                </p>
                 <p className="mt-1 font-mono text-xs font-semibold">39 — 45</p>
               </div>
             </div>
           </div>
 
-          <div className="relative bg-bone p-6 md:p-8 lg:p-10">
-            <div className="absolute inset-6 border border-border md:inset-8" />
-            <div className="relative aspect-[4/5] overflow-hidden border-2 border-ink bg-cement">
+          <div className="relative bg-bone p-4 md:p-6 lg:p-8">
+            <div className="absolute inset-5 border border-border md:inset-6" />
+            <div className="relative mx-auto w-full max-w-[520px] aspect-[4/5] overflow-hidden border-2 border-ink bg-cement">
               <img
                 src={brandImages.campaignRedHeels}
                 alt="Sole Studio oxblood loafer on cement slab"
@@ -113,7 +121,8 @@ function Home() {
             <p className="font-mono text-[11px] tracking-[0.22em] text-primary">02 — SELECTION</p>
             <h2 className="mt-3 font-display text-5xl leading-[0.9]">MADE TO ENDURE.</h2>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
-              Four lasts pulled from the current run. Each built to take polish and miles in equal measure.
+              Four lasts pulled from the current run. Each built to take polish and miles in equal
+              measure.
             </p>
             <Link
               to="/shop"
@@ -128,7 +137,7 @@ function Home() {
           </div>
 
           <div>
-            <div className="grid grid-cols-2 gap-4 lg:gap-6">
+            <div className="grid grid-cols-3 gap-4 lg:gap-6">
               {featured.isLoading &&
                 Array.from({ length: 4 }).map((_, i) => (
                   <div key={i} className="border p-2">
@@ -158,7 +167,9 @@ function Home() {
         <div className="mx-auto grid max-w-[1600px] grid-cols-1 md:grid-cols-2">
           <div className="relative flex flex-col justify-center px-5 py-16 md:px-10 md:py-24">
             <div className="pointer-events-none absolute inset-0 grid-lines opacity-20" />
-            <p className="relative font-mono text-[11px] tracking-[0.22em] text-primary">03 — THE HOUSE</p>
+            <p className="relative font-mono text-[11px] tracking-[0.22em] text-ink-foreground/70">
+              03 — THE HOUSE
+            </p>
             <h2 className="relative mt-4 font-display text-5xl leading-[0.9] md:text-6xl">
               A MONGOLIAN
               <br />
@@ -167,7 +178,9 @@ function Home() {
               <span className="font-light">STRENGTH.</span>
             </h2>
             <div className="relative mt-8 max-w-md space-y-4 border-l border-ink-foreground/20 pl-6 text-sm leading-relaxed text-ink-foreground/70">
-              <p>Cemented construction. Full-grain that patinas instead of cracking through winter.</p>
+              <p>
+                Cemented construction. Full-grain that patinas instead of cracking through winter.
+              </p>
               <p>A last shaped for stride and stance — not the runway.</p>
             </div>
             <Link
@@ -177,9 +190,9 @@ function Home() {
               OUR STORY <span className="h-px w-6 bg-current" />
             </Link>
           </div>
-          <div className="relative bg-[#1a1a1a] p-8 md:p-12">
-            <div className="relative">
-              <div className="absolute -left-4 -top-4 h-full w-full border border-primary/40" />
+          <div className="relative bg-[#1a1a1a] p-5 md:p-8">
+            <div className="relative mx-auto max-w-[520px]">
+              <div className="absolute -left-2 -top-2 h-full w-full border border-primary/40" />
               <img
                 src={brandImages.campaignMirror}
                 alt="Sole Studio loafer on cement display"
@@ -199,7 +212,9 @@ function Home() {
       <section className="mx-auto max-w-[1600px] px-5 py-16 md:px-10 md:py-24">
         <div className="flex flex-wrap items-end justify-between gap-4 border-b pb-6">
           <div>
-            <p className="font-mono text-[11px] tracking-[0.22em] text-primary">04 — SHOP BY BUILD</p>
+            <p className="font-mono text-[11px] tracking-[0.22em] text-primary">
+              04 — SHOP BY BUILD
+            </p>
             <h2 className="mt-2 font-display text-5xl">THE BUILDS.</h2>
           </div>
           <p className="max-w-sm font-mono text-xs leading-relaxed text-muted-foreground">
@@ -216,7 +231,9 @@ function Home() {
               className="group flex items-center justify-between gap-6 py-5 hover:bg-bone/60"
             >
               <div className="flex items-center gap-6">
-                <span className="hidden font-mono text-xs text-muted-foreground md:block">0{idx + 1}</span>
+                <span className="hidden font-mono text-xs text-muted-foreground md:block">
+                  0{idx + 1}
+                </span>
                 {c.image_url && (
                   <img
                     src={c.image_url}
@@ -225,10 +242,15 @@ function Home() {
                     className="h-14 w-14 shrink-0 border border-border object-cover grayscale transition-all group-hover:grayscale-0 md:h-20 md:w-20"
                   />
                 )}
-                <span className="font-display text-2xl tracking-wide md:text-4xl">{c.name.toUpperCase()}</span>
+                <span className="font-display text-2xl tracking-wide md:text-4xl">
+                  {c.name.toUpperCase()}
+                </span>
               </div>
               <span className="flex items-center gap-3 font-mono text-xs font-bold tracking-[0.16em]">
-                SHOP <span className="flex h-8 w-8 items-center justify-center border border-foreground group-hover:bg-foreground group-hover:text-background">→</span>
+                SHOP{" "}
+                <span className="flex h-8 w-8 items-center justify-center border border-foreground group-hover:bg-foreground group-hover:text-background">
+                  →
+                </span>
               </span>
             </Link>
           ))}
@@ -238,8 +260,8 @@ function Home() {
       {/* ON FOOT — Full-width cement editorial, distinct from bone split */}
       <section className="border-y bg-bone">
         <div className="mx-auto grid max-w-[1600px] grid-cols-1 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="relative p-6 md:p-10">
-            <div className="border border-border bg-background p-3">
+          <div className="relative p-4 md:p-6">
+            <div className="mx-auto max-w-[520px] border border-border bg-background p-2">
               <img
                 src={brandImages.campaignWhite}
                 alt="Sole Studio derby on concrete pedestal"
@@ -247,7 +269,7 @@ function Home() {
                 className="aspect-[4/5] w-full object-cover"
               />
             </div>
-            <div className="absolute bottom-10 left-10 bg-ink px-4 py-2 font-mono text-[11px] tracking-[0.16em] text-ink-foreground">
+            <div className="absolute bottom-7 left-7 bg-ink px-3 py-2 font-mono text-[10px] tracking-[0.16em] text-ink-foreground">
               WORN DAILY — UB CITY
             </div>
           </div>
@@ -259,16 +281,22 @@ function Home() {
               WITH PURPOSE.
             </h2>
             <p className="mt-6 max-w-md text-sm leading-relaxed text-muted-foreground">
-              Boardrooms, late nights, concrete floors — our shoes are chosen, worn, and lived in. Patina tells the
-              story. Share yours: tag the slab.
+              Boardrooms, late nights, concrete floors — our shoes are chosen, worn, and lived in.
+              Patina tells the story. Share yours: tag the slab.
             </p>
             <div className="mt-8 grid grid-cols-3 gap-2">
               {[
-                brandImages.storeInterior,
                 brandImages.campaignMirror,
+                brandImages.campaignBlack,
                 brandImages.campaignRedHeels,
               ].map((src) => (
-                <img key={src} src={src} alt="" loading="lazy" className="aspect-square w-full border border-border object-cover" />
+                <img
+                  key={src}
+                  src={src}
+                  alt=""
+                  loading="lazy"
+                  className="aspect-square w-full border border-border object-cover"
+                />
               ))}
             </div>
           </div>
@@ -278,9 +306,9 @@ function Home() {
       {/* INSTAGRAM — Tight cement grid, no Vinci eyebrow */}
       <section className="mx-auto max-w-[1600px] px-5 py-16 md:px-10 md:py-20">
         <div className="flex flex-wrap items-baseline justify-between gap-4">
-          <h2 className="font-display text-3xl tracking-wide md:text-5xl">@SOLE.STUDIO_MN</h2>
+          <h2 className="font-display text-3xl tracking-wide md:text-5xl">@SOLESTUDIO.MN</h2>
           <a
-            href="https://instagram.com/solestudio_mn"
+            href="https://www.instagram.com/solestudio.mn/"
             target="_blank"
             rel="noreferrer"
             className="font-mono text-xs font-bold tracking-[0.16em] underline decoration-1 underline-offset-4"
@@ -289,24 +317,27 @@ function Home() {
           </a>
         </div>
         <div className="mt-8 grid grid-cols-4 gap-2">
-          {[brandImages.storeInterior, brandImages.campaignMirror, brandImages.campaignWhite, brandImages.campaignRedHeels].map(
-            (src) => (
-              <a
-                key={src}
-                href="https://instagram.com/solestudio_mn"
-                target="_blank"
-                rel="noreferrer"
-                className="group block border border-border p-1 hover:border-primary"
-              >
-                <img
-                  src={src}
-                  alt="Sole Studio on Instagram"
-                  loading="lazy"
-                  className="aspect-square w-full object-cover transition duration-500 group-hover:grayscale-0 grayscale"
-                />
-              </a>
-            ),
-          )}
+          {[
+            brandImages.campaignBlack,
+            brandImages.campaignMirror,
+            brandImages.campaignWhite,
+            brandImages.campaignRedHeels,
+          ].map((src) => (
+            <a
+              key={src}
+              href="https://www.instagram.com/solestudio.mn/"
+              target="_blank"
+              rel="noreferrer"
+              className="group block border border-border p-1 hover:border-primary"
+            >
+              <img
+                src={src}
+                alt="Sole Studio on Instagram"
+                loading="lazy"
+                className="aspect-square w-full object-cover transition duration-500 group-hover:grayscale-0 grayscale"
+              />
+            </a>
+          ))}
         </div>
         <p className="mt-4 text-center font-mono text-[11px] tracking-[0.16em] text-muted-foreground">
           CEMENT · WOOD · OXBLOOD — TAG THE SLAB

@@ -35,7 +35,9 @@ function Store() {
         <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 mx-auto max-w-[1600px] px-5 pb-10 md:px-10">
           <span className="eyebrow text-ink-foreground/70">Come and see</span>
-          <h1 className="mt-2 font-display text-5xl text-ink-foreground md:text-7xl">SOLE STUDIO</h1>
+          <h1 className="mt-2 font-display text-5xl text-ink-foreground md:text-7xl">
+            SOLE STUDIO
+          </h1>
         </div>
       </section>
 
@@ -44,12 +46,13 @@ function Store() {
           <span className="eyebrow text-primary">Workshop & Store</span>
           <h2 className="mt-3 font-display text-3xl md:text-5xl">SOLE STUDIO STORE</h2>
           <p className="mt-6 font-display text-2xl font-light tracking-wide">
-            Tara Center, 2F
+            GEM PALACE, 3F
             <br />
-            B-218a, Ulaanbaatar, Mongolia
+            302, Ulaanbaatar, Mongolia
           </p>
           <p className="mt-4 max-w-md text-sm leading-relaxed text-muted-foreground">
-            Cement floors, warm wood, oxblood walls. Try every size — our team measures, fits and laces you in.
+            Cement floors, warm wood, oxblood walls. Try every size — our team measures, fits and
+            laces you in.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <a
