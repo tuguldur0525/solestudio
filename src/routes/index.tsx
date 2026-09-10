@@ -32,85 +32,53 @@ function Home() {
 
   return (
     <>
-      {/* HERO — SPLIT, not full-bleed like Vinci. Cement left, image right with frame. */}
-      <section className="border-b bg-background">
-        <div className="mx-auto grid max-w-[1600px] grid-cols-1 md:grid-cols-[1.2fr_0.8fr]">
-          <div className="relative flex flex-col justify-center px-5 py-12 md:px-10 md:py-20 lg:py-24">
-            <div className="absolute left-0 top-0 hidden h-full w-px bg-border md:block" />
-            <p className="font-mono text-[11px] tracking-[0.24em] text-muted-foreground">
-              01 — AUTUMN / WINTER 2026 MENS COLLECTION
+      {/* HERO — Image-background, minimal */}
+      <section className="relative min-h-[86vh] w-full overflow-hidden bg-ink">
+        <img
+          src={brandImages.campaignRedHeels}
+          alt="Sole Studio oxblood loafers on cement slab"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-ink/55" />
+        <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink/40 via-transparent to-transparent" />
+
+        <div className="relative mx-auto flex min-h-[86vh] max-w-[1600px] flex-col justify-center px-5 py-16 md:px-10 md:py-20">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="max-w-xl text-ink-foreground"
+          >
+            <p className="font-mono text-[11px] tracking-[0.22em] text-ink-foreground/60">
+              AUTUMN / WINTER 2026 — MENS
             </p>
 
-            <h1 className="mt-6 font-display text-[3.4rem] leading-[0.85] md:text-[5.2rem] lg:text-[6rem]">
-              <span className="block font-light tracking-[0.02em] text-muted-foreground">
-                BUILT FOR
-              </span>
-              <span className="block tracking-[0.02em]">THE STRIDE</span>
-              <span className="mt-3 block h-1 w-24 bg-primary" />
+            <h1 className="mt-4 font-display text-[3.5rem] leading-[0.88] tracking-[-0.02em] md:text-[5.5rem]">
+              <span className="block font-light text-ink-foreground/70">BUILT FOR</span>
+              <span className="block">THE STRIDE.</span>
             </h1>
+            <div className="mt-4 h-px w-14 bg-primary" />
 
-            <p className="mt-8 max-w-[52ch] border-l-2 border-cement pl-5 text-sm leading-relaxed text-muted-foreground">
-              Full-grain leather, cement construction, wood-pegged shank. No seasonal gimmicks —
-              pairs that patina, resole, and stay on foot for years.
+            <p className="mt-6 max-w-[42ch] text-sm leading-relaxed text-ink-foreground/70">
+              Full-grain leather. Cement construction. Wood-pegged. Pairs that patina and resole.
             </p>
 
-            <div className="mt-10 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 to="/shop"
-                className="bg-primary px-8 py-4 font-mono text-xs font-bold tracking-[0.14em] text-primary-foreground transition-colors hover:bg-ink"
+                className="bg-primary px-7 py-4 font-mono text-xs font-bold tracking-[0.14em] text-primary-foreground hover:bg-background hover:text-foreground"
               >
-                SHOP NEW ARRIVALS →
+                SHOP NEW ARRIVALS
               </Link>
               <Link
                 to="/collections"
-                className="border border-foreground px-8 py-4 font-mono text-xs font-bold tracking-[0.14em] transition-colors hover:bg-foreground hover:text-background"
+                className="border border-ink-foreground/30 px-7 py-4 font-mono text-xs font-bold tracking-[0.14em] text-ink-foreground hover:bg-ink-foreground hover:text-ink"
               >
                 EXPLORE BUILDS
               </Link>
             </div>
-
-            <div className="mt-12 flex gap-8 border-t pt-6">
-              <div>
-                <p className="font-mono text-[11px] tracking-[0.16em] text-muted-foreground">
-                  MATERIAL
-                </p>
-                <p className="mt-1 font-mono text-xs font-semibold">FULL-GRAIN LEATHER • SUEDE</p>
-              </div>
-              <div>
-                <p className="font-mono text-[11px] tracking-[0.16em] text-muted-foreground">
-                  BUILD
-                </p>
-                <p className="mt-1 font-mono text-xs font-semibold">CEMENT • WOOD PEG</p>
-              </div>
-              <div className="hidden sm:block">
-                <p className="font-mono text-[11px] tracking-[0.16em] text-muted-foreground">
-                  SIZES
-                </p>
-                <p className="mt-1 font-mono text-xs font-semibold">39 — 45</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="relative bg-bone p-4 md:p-6 lg:p-8">
-            <div className="absolute inset-5 border border-border md:inset-6" />
-            <div className="relative mx-auto w-full max-w-[520px] aspect-[4/5] overflow-hidden border-2 border-ink bg-cement">
-              <img
-                src={brandImages.campaignRedHeels}
-                alt="Sole Studio oxblood loafer on cement slab"
-                className="h-full w-full object-cover"
-              />
-              <div className="absolute bottom-0 left-0 bg-ink px-4 py-3 text-ink-foreground">
-                <p className="font-mono text-[10px] tracking-[0.18em]">LOAFER — OXBLOOD</p>
-                <p className="mt-1 font-display text-xl">No. 02 Cement Loafer</p>
-              </div>
-              <div className="absolute right-3 top-3 bg-background px-3 py-2 font-mono text-[10px] font-bold tracking-widest">
-                02 / CEMENT
-              </div>
-            </div>
-            <p className="mt-4 font-mono text-[11px] tracking-wide text-muted-foreground">
-              PHOTOGRAPHED ON CEMENT SLAB — STUDIO FLOOR
-            </p>
-          </div>
+          </motion.div>
         </div>
       </section>
 
