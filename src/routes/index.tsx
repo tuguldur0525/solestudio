@@ -32,52 +32,69 @@ function Home() {
 
   return (
     <>
-      {/* HERO — Image-background, minimal */}
+      {/* HERO — Image-background, visually tuned for cement + ink contrast */}
       <section className="relative min-h-[86vh] w-full overflow-hidden bg-ink">
         <img
-          src={brandImages.campaignRedHeels}
+          src={brandImages.heroMain}
+          srcSet={brandImages.heroMainSrcSet}
+          sizes="100vw"
+          width={1920}
+          height={1014}
+          fetchPriority="high"
+          decoding="async"
           alt="Sole Studio oxblood loafers on cement slab"
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-cover object-[63%_38%] brightness-[1.04] contrast-[1.06] md:object-[50%_38%]"
         />
-        <div className="absolute inset-0 bg-ink/55" />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/40 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/40 via-transparent to-transparent" />
+        {/* subtle base dim — keeps cement texture visible */}
+        <div className="absolute inset-0 bg-ink/[0.36]" />
+        {/* left legibility wash — strong near text, fades by 62% */}
+        <div className="absolute inset-0 bg-gradient-to-r from-ink/85 via-ink/42 to-transparent md:from-ink/82 md:via-ink/28" />
+        {/* bottom vignette to anchor CTAs */}
+        <div className="absolute inset-0 bg-gradient-to-t from-ink/45 via-transparent to-transparent" />
 
         <div className="relative mx-auto flex min-h-[86vh] max-w-[1600px] flex-col justify-center px-5 py-16 md:px-10 md:py-20">
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="max-w-xl text-ink-foreground"
+            className="max-w-[560px] text-ink-foreground"
           >
-            <p className="font-mono text-[11px] tracking-[0.22em] text-ink-foreground/60">
-              AUTUMN / WINTER 2026 — MENS
+            <p className="inline-flex items-center gap-3 font-mono text-[11px] tracking-[0.22em] text-ink-foreground/65">
+              <span className="h-px w-7 bg-primary" />
+              CRAFTED FOR MEN
             </p>
 
-            <h1 className="mt-4 font-display text-[3.5rem] leading-[0.88] tracking-[-0.02em] md:text-[5.5rem]">
-              <span className="block font-light text-ink-foreground/70">BUILT FOR</span>
-              <span className="block">THE STRIDE.</span>
+            <h1 className="mt-5 font-display text-[3.5rem] leading-[0.86] tracking-[-0.03em] md:text-[5.6rem]">
+              <span className="block font-light tracking-[0.015em] text-ink-foreground/62">
+                BUILT FOR
+              </span>
+              <span className="block drop-shadow-[0_1px_12px_rgba(0,0,0,0.35)]">THE STRIDE.</span>
             </h1>
-            <div className="mt-4 h-px w-14 bg-primary" />
+            <div className="mt-5 h-[2px] w-[56px] bg-primary" />
 
-            <p className="mt-6 max-w-[42ch] text-sm leading-relaxed text-ink-foreground/70">
-              Full-grain leather. Cement construction. Wood-pegged. Pairs that patina and resole.
+            <p className="mt-6 max-w-[40ch] text-[14px] leading-relaxed text-ink-foreground/72 md:text-[15px]">
+              Full-grain leather. Cement build. Wood-pegged shank. Pairs that patina and resole —
+              not replace.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 to="/shop"
-                className="bg-primary px-7 py-4 font-mono text-xs font-bold tracking-[0.14em] text-primary-foreground hover:bg-background hover:text-foreground"
+                className="bg-primary px-7 py-[14px] font-mono text-xs font-bold tracking-[0.14em] text-primary-foreground shadow-[0_6px_20px_rgba(90,21,16,0.35)] transition-colors hover:bg-background hover:text-foreground"
               >
                 SHOP NEW ARRIVALS
               </Link>
               <Link
                 to="/collections"
-                className="border border-ink-foreground/30 px-7 py-4 font-mono text-xs font-bold tracking-[0.14em] text-ink-foreground hover:bg-ink-foreground hover:text-ink"
+                className="border border-ink-foreground/28 bg-ink-foreground/5 px-7 py-[14px] font-mono text-xs font-bold tracking-[0.14em] text-ink-foreground backdrop-blur-[2px] transition-colors hover:border-ink-foreground hover:bg-ink-foreground hover:text-ink"
               >
                 EXPLORE BUILDS
               </Link>
             </div>
+
+            <p className="mt-8 font-mono text-[10px] tracking-[0.16em] text-ink-foreground/40">
+              CEMENT · WOOD · OXBLOOD — ULAANBAATAR
+            </p>
           </motion.div>
         </div>
       </section>

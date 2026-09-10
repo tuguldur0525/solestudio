@@ -28,11 +28,6 @@ export function SiteHeader() {
 
   return (
     <>
-      {/* Utility bar — cement / workshop vibe */}
-      <div className="hidden bg-ink px-5 py-2 text-center text-[10px] tracking-[0.28em] text-ink-foreground/60 md:block">
-        ULAANBAATAR — CEMENT & WOOD — EST 2024 — CRAFTED FOR MEN
-      </div>
-
       <header
         className={cn(
           "sticky top-0 z-50 border-b bg-background transition-all",
@@ -51,7 +46,11 @@ export function SiteHeader() {
               <Menu className="h-5 w-5" />
             </button>
 
-            <Link to="/" aria-label="Sole Studio home" className="block border-l-2 border-primary pl-4">
+            <Link
+              to="/"
+              aria-label="Sole Studio home"
+              className="block border-l-2 border-primary pl-4"
+            >
               <WordmarkCompact className="text-ink" />
             </Link>
           </div>
@@ -87,7 +86,9 @@ export function SiteHeader() {
               className="relative flex items-center gap-2 bg-ink px-4 py-2.5 text-ink-foreground"
             >
               <ShoppingBag className="h-[14px] w-[14px]" />
-              <span className="hidden text-[11px] font-semibold tracking-[0.18em] sm:block">BAG</span>
+              <span className="hidden text-[11px] font-semibold tracking-[0.18em] sm:block">
+                BAG
+              </span>
               <span className="flex h-5 min-w-5 items-center justify-center bg-primary px-1.5 text-[11px] font-bold text-primary-foreground">
                 {count}
               </span>
@@ -96,7 +97,12 @@ export function SiteHeader() {
         </div>
 
         {/* Secondary line — subtle cement ticker when scrolled */}
-        <div className={cn("h-px w-full bg-border transition-opacity", scrolled ? "opacity-100" : "opacity-0")} />
+        <div
+          className={cn(
+            "h-px w-full bg-border transition-opacity",
+            scrolled ? "opacity-100" : "opacity-0",
+          )}
+        />
       </header>
 
       <AnimatePresence>
@@ -109,12 +115,18 @@ export function SiteHeader() {
           >
             <div className="flex h-[68px] items-center justify-between px-5">
               <WordmarkCompact className="text-ink-foreground" />
-              <button onClick={() => setMenuOpen(false)} aria-label="Close menu" className="border border-ink-foreground/20 p-2">
+              <button
+                onClick={() => setMenuOpen(false)}
+                aria-label="Close menu"
+                className="border border-ink-foreground/20 p-2"
+              >
                 <X className="h-5 w-5" />
               </button>
             </div>
             <div className="px-5 pt-10">
-              <p className="font-mono text-[11px] tracking-[0.24em] text-ink-foreground/40">NAVIGATION — 01/05</p>
+              <p className="font-mono text-[11px] tracking-[0.24em] text-ink-foreground/40">
+                NAVIGATION — 01/05
+              </p>
               <nav className="mt-6 flex flex-col">
                 {NAV.map((item, i) => (
                   <motion.div
@@ -137,10 +149,18 @@ export function SiteHeader() {
                 ))}
               </nav>
               <div className="mt-10 flex gap-6">
-                <Link to="/auth" onClick={() => setMenuOpen(false)} className="eyebrow text-ink-foreground/60">
+                <Link
+                  to="/auth"
+                  onClick={() => setMenuOpen(false)}
+                  className="eyebrow text-ink-foreground/60"
+                >
                   Account
                 </Link>
-                <Link to="/track-order" onClick={() => setMenuOpen(false)} className="eyebrow text-ink-foreground/60">
+                <Link
+                  to="/track-order"
+                  onClick={() => setMenuOpen(false)}
+                  className="eyebrow text-ink-foreground/60"
+                >
                   Track order
                 </Link>
               </div>
