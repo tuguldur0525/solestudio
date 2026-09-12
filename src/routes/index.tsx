@@ -60,7 +60,7 @@ function Home() {
             className="max-w-[560px] text-ink-foreground"
           >
             <p className="inline-flex items-center gap-3 font-mono text-[11px] tracking-[0.22em] text-ink-foreground/65">
-              <span className="h-px w-7 bg-primary" />
+              <span className="h-px w-3 bg-primary" />
               CRAFTED FOR MEN
             </p>
 
@@ -72,7 +72,7 @@ function Home() {
             </h1>
             <div className="mt-5 h-[2px] w-[56px] bg-primary" />
 
-            <p className="mt-6 max-w-[40ch] text-[14px] leading-relaxed text-ink-foreground/72 md:text-[15px]">
+            <p className="mt-6 max-w-[30ch] sm:max-w-[40ch] text-[14px] leading-relaxed text-ink-foreground/72 md:text-[15px]">
               Full-grain leather. Cement build. Wood-pegged shank. Pairs that patina and resole —
               not replace.
             </p>

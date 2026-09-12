@@ -87,12 +87,12 @@ function Store() {
           <ul className="mt-5 space-y-3 text-sm">
             <li>
               <a
-                href="https://instagram.com/solestudio_mn"
+                href="https://instagram.com/solestudio.mn"
                 target="_blank"
                 rel="noreferrer"
                 className="link-underline"
               >
-                Instagram — @sole.studio_mn
+                Instagram — @solestudio.mn
               </a>
             </li>
             <li>

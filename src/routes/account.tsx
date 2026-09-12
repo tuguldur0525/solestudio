@@ -46,7 +46,7 @@ function Account() {
       <div className="flex flex-wrap items-end justify-between gap-4 border-b pb-8">
         <div>
           <span className="eyebrow text-primary">My account</span>
-          <h1 className="mt-3 font-display text-5xl">{user?.email ?? ""}</h1>
+          <h1 className="mt-3 font-display text-3xl">{user?.email ?? ""}</h1>
         </div>
         <div className="flex gap-3">
           {isAdmin && (

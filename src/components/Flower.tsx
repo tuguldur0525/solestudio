@@ -52,7 +52,7 @@ export function WordmarkCompact({ className }: { className?: string }) {
       </span>
       <span className="flex items-center gap-2">
         <span className="h-px w-6 bg-current opacity-50" />
-        <span className="font-sans text-[0.52rem] font-semibold tracking-[0.28em] opacity-70">
+        <span className="font-sans text-[0.52rem] font-semibold py-1 tracking-[0.28em] opacity-70">
           CRAFTED FOR MEN
         </span>
         <span className="h-px w-6 bg-current opacity-50" />
